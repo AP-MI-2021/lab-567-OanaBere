@@ -1,9 +1,6 @@
 
 
-lista_obiecte = []
 
-def get_all_object():
-    return lista_obiecte
 
 
 def getNewObject(_id: int, _nume: str, _descriere: str, _pret: int, _locatie: str):

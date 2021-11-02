@@ -1,21 +1,22 @@
-from Domain.obiect2 import getNewObject, get_id
+from Domain.obiect import creare_obiect, get_id
+
 from Logic.general_logic import create, read, update, delete
 
 
 def get_data():
     return [
-        getNewObject(1, 'laptop', 'hp', 4000, 'cluj'),
-        getNewObject(2, 'lampa', 'verde', 100, 'arad'),
-        getNewObject(3, 'monitor', 'dell', 1200, 'sala'),
-        getNewObject(4, 'scaun', 'negru', 350, 'cls3'),
-        getNewObject(5, 'flori', 'bujori', 50, 'vaza'),
+        creare_obiect(1, 'laptop', 'hp', 4000, 'cluj'),
+        creare_obiect(2, 'lampa', 'verde', 100, 'arad'),
+        creare_obiect(3, 'monitor', 'dell', 1200, 'sala'),
+        creare_obiect(4, 'scaun', 'negru', 350, 'cls3'),
+        creare_obiect(5, 'flori', 'bujori', 50, 'vaza'),
             ]
 
 
 def test_create():
     obiecte = get_data()
     params = (6, 'dulap', 'inalt', 200, 'cluj')
-    new_obiect = getNewObject(*params)
+    new_obiect = creare_obiect(*params)
     lst = create(obiecte, *params)
     assert new_obiect in lst
 
@@ -29,7 +30,7 @@ def test_read():
 def test_update():
     obiecte = get_data()
     params = (5, 'dulap', 'inalt', '200', 'birou')
-    up_obiect = getNewObject(*params)
+    up_obiect = creare_obiect(*params)
     lst = update(obiecte, up_obiect)
     assert up_obiect not in obiecte
     assert up_obiect in lst

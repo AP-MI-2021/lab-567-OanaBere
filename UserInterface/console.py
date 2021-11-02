@@ -1,84 +1,109 @@
-from Domain.obiect2 import get_str, getNewObject
+from Domain.obiect import creare_obiect, get_str
+
+from Logic.functionalitati import modify_location, concat_string_descriere
 from Logic.general_logic import delete, read, update, create
 
 
-def meniu():
-    print('1. CRUD')
-    print('2. Mutarea tuturor obiectelor dintr-o locatie in alta')
-    print('3. Concatenarea unui string citit la toate descrierile obiectelor'
-          ' cu prețul mai mare decât o valoare citită.')
-    print('4. Determinarea celui mai mare preț pentru fiecare locație.')
-    print('5. Ordonarea obiectelor crescător după prețul de achiziție.')
-    print('6. Afișarea sumelor prețurilor pentru fiecare locație.')
-    print('7. Undo.')
+def printMeniu():
+    print('1. Adaugare obiect.')
+    print('2. Afisare obiecte.')
+    print('3. Stergere obiect.')
+    print('4. Modificare obiect.')
+    print('5. Detalii obiect.')
+    print('6. Mutare obiecte intr-o alta locatie.')
+    print('7. Concatenarea unui string la descrierea unui obiect care are pretul mai mare decat o valoare data.')
     print('x. Iesire')
 
 
 def handle_add(obiecte):
-    id_obiect = int(input("Dati id-ul:"))
-    nume_obiect = input("Dati numele obiectului:")
-    descriere_obiect = input("Dati descrierea obiectului:")
-    pret_obiect = int(input("Dati pretul:"))
-    locatie_obiect = input("Dati locatia obiectului ,exact 4 caractere:")
-    return create(obiecte, id_obiect, nume_obiect, descriere_obiect, pret_obiect, locatie_obiect)
+    try:
+        id_obiect = int(input("Dati id-ul:"))
+        nume_obiect = input("Dati numele obiectului:")
+        descriere_obiect = input("Dati descrierea obiectului:")
+        pret_obiect = int(input("Dati pretul:"))
+        locatie_obiect = input("Dati locatia obiectului ,exact 4 caractere:")
+        return create(obiecte, id_obiect, nume_obiect, descriere_obiect, pret_obiect, locatie_obiect)
+    except ValueError as ve:
+        print('Eroare: ', ve)
+    return obiecte
 
+def handle_delete(obiect):
+    try:
+        id_obiect = int(input("Dati id-ul obiectului pe care doriti sa il stergeti:"))
+        return delete(obiect, id_obiect)
+    except ValueError as ve:
+        print('Eroare: ', ve)
+    return obiect
 
-def handle_delete(obiecte):
-    id_obiect = int(input("Dati id-ul elementului pe care doriti sa il stergeti:"))
-    return delete(obiecte, id_obiect)
+def handle_modify_object(obiecte):
+    try:
+        id_obiect = int(input("Dati id-ul obiectului pe care doriti sa il modificati:"))
+        nume_obiect = input("Dati numele obiectului:")
+        descriere_obiect = input("Dati descrierea obiectului:")
+        pret_obiect = int(input("Dati pretul:"))
+        locatie_obiect = input("Dati locatia obiectului ,exact 4 caractere:")
+        obiect = creare_obiect(id_obiect, nume_obiect, descriere_obiect, pret_obiect, locatie_obiect)
+        return update(obiecte, obiect)
+    except ValueError as ve:
+        print('Eroare: ',ve)
+    return obiecte
 
-
-def handle_up(obiecte):
-    id_obiect = int(input("Dati id-ul obiectului pe care doriti sa il modificati:"))
-    nume_obiect = input("Dati numele obiectului:")
-    descriere_obiect = input("Dati numele obiectului:")
-    pret_obiect = int(input("Dati pretul:"))
-    locatie_obiect = input("Dati locatia obiectului ,exact 4 caractere:")
-    obiect = getNewObject(id_obiect, nume_obiect, descriere_obiect, pret_obiect, locatie_obiect)
-    return update(obiecte, obiect)
-
-
-def handle_detalii(obiecte):
-    id_obiect = int(input("Dati id-ul obiectului despre care vreti detalii:"))
-    obiect = read(obiecte, id_obiect)
-    return get_str(obiect)
+def handle_details(obiecte):
+    try:
+        id_obiect = int(input("Dati id-ul obiectului despre care vreti detalii:"))
+        obiect = read(obiecte, id_obiect)
+        return get_str(obiect)
+    except ValueError as ve:
+        print("Eroare:", ve)
+    return obiecte
 
 
 def handle_show_all(obiecte):
-    for obiect in obiecte:
-        print(get_str(obiect))
+     for obiect in obiecte:
+         print(get_str(obiect))
 
 
-def meniu_crud(obiecte):
+
+def handle_modify_location(obiecte):
+    try:
+        locatie_initiala = input("Dati locatia din care sa se mute obiectele (4 caractere):")
+        locatie_noua = input("Dati locatia in care sa se mute obiectele (4 caractere):")
+        obiecte = modify_location(obiecte, locatie_initiala, locatie_noua)
+    except ValueError as ve:
+        print("Eroare:", ve)
+    return obiecte
+
+def handle_concat_string_descriere(obiecte):
+    try:
+        string = input("Dati string-ul care va fi adaugat la descrierea obiectului: ")
+        valoare = int(input("Dati o valoare pentru a compara pretul obiectului: "))
+        obiecte = concat_string_descriere(obiecte, string, valoare)
+    except ValueError as ve:
+        print("Eroare:", ve)
+    return obiecte
+
+
+def run_Menu(obiecte):
     while True:
-        print("1. Adaugare obiect")
-        print("2. Detalii obiect")
-        print("3. Actualizare obiect")
-        print("4. Stergere obiect")
-        print("5. Afisare")
-        print("6. Revenire")
+        printMeniu()
         optiune = input("Alegeti optiunea dorita:")
         if optiune == '1':
             obiecte = handle_add(obiecte)
         elif optiune == '2':
-            print(handle_detalii(obiecte))
-        elif optiune == '3':
-            obiecte = handle_up(obiecte)
-        elif optiune == '4':
-            obiecte = handle_delete(obiecte)
-        elif optiune == '5':
             handle_show_all(obiecte)
+        elif optiune == '3':
+            obiecte = handle_delete(obiecte)
+        elif optiune == '4':
+            obiecte = handle_modify_object(obiecte)
+        elif optiune == '5':
+            print(handle_details(obiecte))
         elif optiune == '6':
+            obiecte = handle_modify_location(obiecte)
+            print(obiecte)
+        elif optiune == '7':
+            obiecte = handle_concat_string_descriere(obiecte)
+            print(obiecte)
+        elif optiune == 'x':
             break
         else:
-            print("Optiune invalida")
-
-
-def run_ui(obiecte):
-    while True:
-        meniu()
-        optiune = input("Alegeti optiunea dorita:")
-        if optiune == '1':
-            meniu_crud(obiecte)
-        else:
-            break
+            print("Optiune invalida!")
