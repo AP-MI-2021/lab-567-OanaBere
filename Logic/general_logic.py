@@ -12,7 +12,8 @@ def create(lst_obiecte, id_obiect, nume, descriere, pret_achizitie, locatie):
     :param locatie:string
     :return:o lista noua de obiecte formata din lista initiala si noul obiect
     """
-    if read(lst_obiecte, id_obiect) is not None:
+
+    if read(lst_obiecte, id_obiect):
         raise ValueError(f'Exista deja un obiect cu id-ul {id_obiect}!')
     if len(locatie) != 4:
         raise ValueError(f'Locatie introdusa gresit! Trebuie sa aiba exact 4 caractere! ')
