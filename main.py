@@ -13,11 +13,8 @@ def main():
     obiecte = create(obiecte, 4, 'canapea', 'living', 2800, 'arad')
     obiecte = create(obiecte, 5, 'imprimanta', 'epson', 1500, 'desk')
 
-    meniu = str(input("Scrieti ce fel de meniu doriti: clasic sau prin comenzi "))
-    if meniu == "clasic":
-        run_Menu(obiecte)
-    elif meniu == "comenzi":
-        newMenu(obiecte)
+
+    obiecte = newMenu(obiecte)
 
 
 if __name__ == '__main__':
