@@ -33,6 +33,10 @@ def concat_string_descriere(lst_obiecte, string, valoare):
     :param valoare: int
     :return: descrierea obiectului dupa concatenare sau descrierea fara concatenare daca pretul este mai mic decat valoarea
     '''
+    if type(string) is not str:
+        raise ValueError("Variabila string trebuie sa fie de tip str!")
+    if type(valoare) is not int:
+        raise ValueError("Variabila valoare trebuie sa fie de tip int!")
     new_list = []
     for obiect in lst_obiecte:
         if get_pret(obiect) > valoare:

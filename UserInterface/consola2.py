@@ -17,6 +17,14 @@ def showAll(lista_obiecte):
         print(get_str(obiect))
 
 
+def concat_string_descriere2(obiecte,string,valoare):
+    try:
+
+        obiecte = concat_string_descriere(obiecte, string, valoare)
+    except ValueError as ve:
+        print("Eroare:", ve)
+    return obiecte
+
 
 def newMenu(obiecte):
     print('Introduceti "help" pentru a vedea comenzile disponibile sau introduceti comanda dorita: ')
@@ -55,7 +63,7 @@ def newMenu(obiecte):
                     elif opt[0] == "modify location":
                         obiecte = modify_location(obiecte, str(opt[1]), str(opt[2]))
                     elif opt[0] == "concat":
-                        obiecte = concat_string_descriere(obiecte, str(opt[1]), int(opt[2]))
+                        obiecte = concat_string_descriere2(obiecte,(opt[1]),(opt[2]))
                     else:
                         print("Optiune invalida! Tastati 'help' sau reincercati!")
 
