@@ -117,19 +117,36 @@ def handle_new_list(list_versions, current_version, prajituri):
     return list_versions, current_version
 
 def handle_undo(list_versions, current_version):
-    if current_version < 1:
-        print("Nu se mai poate face undo.")
+    '''
+    functie care anuleaza ultima functionalitate executata
+    :param list_versions: versiunea actuala a listei
+    :param current_version: numarul care reprezinta versiunea listei
+    :return: lista actualizata
+    '''
+    try:
+        if current_version < 1:
+            print("Nu se mai poate face undo.")
+            return list_versions[current_version], current_version
+        current_version -= 1
         return list_versions[current_version], current_version
-    current_version -= 1
-    return list_versions[current_version], current_version
+    except ValueError as ve:
+        print('Eroare: ', ve)
 
 def handle_redo(list_versions, current_version):
-    if current_version == len(list_versions) - 1:
-        print("Nu se mai poate face redo.")
+    '''
+    functie care reface lista initiala in urma comenzii de undo
+    :param list_versions: versiunea actuala a listei
+    :param current_version: numarul care reprezinta versiunea listei
+    :return: lista actualizata
+    '''
+    try:
+        if current_version == len(list_versions) - 1:
+            print("Nu se mai poate face redo.")
+            return list_versions[current_version], current_version
+        current_version += 1
         return list_versions[current_version], current_version
-    current_version += 1
-    return list_versions[current_version], current_version
-
+    except ValueError as ve:
+        print('Eroare: ', ve)
 
 
 
