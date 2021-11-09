@@ -1,5 +1,4 @@
-
-
+from Domain import obiect
 from Domain.obiect import get_locatie, get_id, get_nume, get_descriere, get_pret, creare_obiect
 
 
@@ -47,3 +46,45 @@ def concat_string_descriere(lst_obiecte, string, valoare):
         else:
             new_list.append(obiect)
     return new_list
+
+def pret_maxim_locatie(lst_obiecte):
+    '''
+    functie care determina pretul maxim pentru fiecare locatie
+    :param lst_obiecte: lista obiecte
+    :return: un dictionar in care locatia este cheia, iar valoarea este reprezentata de obiectul cu pretul cel mai mare
+    '''
+    result = {}
+    for obiect in lst_obiecte:
+        locatie = get_locatie(obiect)
+        pret = get_pret(obiect)
+        if locatie in result:
+            if pret > result[locatie]:
+                result[locatie] = pret
+        else:
+            result[locatie] = pret
+    return result
+
+def ord_cresc_dupa_pret_achizitie(lst_obiecte):
+    '''
+    functie care ordoneaza crescator obiectele dupa pretul achizitiei
+    :param lst_obiecte:lista de obiecte
+    :return:dictionarul rezultat
+    '''
+    return sorted(lst_obiecte, key = get_pret)
+
+def suma_pret_per_locatie(lst_obiecte):
+    '''
+    functie care determina suma preturilor pentru fiecare locatie
+    :param lst_obiecte:lista de obiecte
+    :return:un dictionar unde cheia este locatia si valoarea este suma preturilor
+    '''
+    lista = {}
+    for obiect in lst_obiecte:
+        locatie = get_locatie(obiect)
+        pret = get_pret(obiect)
+        if locatie not in lista:
+            lista[locatie] = pret
+        else:
+            lista[locatie] += pret
+    return lista
+

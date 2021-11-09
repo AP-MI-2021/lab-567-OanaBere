@@ -1,7 +1,6 @@
 from Logic.general_logic import create
 from Tests.test_crud import test
-from Tests.teste_functionalitati import test_modify_location, test_concat_string_descriere
-from UserInterface.consola2 import newMenu
+from Tests.teste_functionalitati import test_modify_location, test_concat_string_descriere, test_pret_maxim_locatie
 from UserInterface.console import run_Menu
 
 
@@ -14,11 +13,13 @@ def main():
     obiecte = create(obiecte, 5, 'imprimanta', 'epson', 1500, 'desk')
 
 
-    obiecte = newMenu(obiecte)
+    obiecte = run_Menu(obiecte)
 
 
 if __name__ == '__main__':
     test()
     test_modify_location()
+
     test_concat_string_descriere()
+    test_pret_maxim_locatie()
     main()
